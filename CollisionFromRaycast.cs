@@ -10,46 +10,49 @@ namespace OneDayGame {
         /// If collision happened.
         [SerializeField]
         private bool collision;
+        /// Contain info about collied object.
+        protected RaycastHit hit;
+        /// Layer on which collisions should be detected
+        [SerializeField]
+        private LayerMask includeLayerMask;
+        /// Object that has been hit
+        protected GameObject hitObject;
+        #endregion
 
-        public bool Collision {
-            get { return collision; }
-        }
+        #region INSPECTOR FIELDS
+        /// Disable component after collision.
+        [SerializeField]
+        private bool disableAfterCollision;
+
+        /// Pause game on collision.
+        [SerializeField]
+        private bool pauseGame;
+
+        /// Draw raycast.
+        [SerializeField]
+        private bool drawRay;
 
         /// Raycast length.
         [SerializeField]
         private float raycastLength = 1;
-        public float RaycastLength {
-            get { return raycastLength; }
-            set { raycastLength = value; }
+
+        #endregion
+
+        #region PROPERTIES
+        public LayerMask IncludeLayerMask {
+            get { return includeLayerMask; }
+            set { includeLayerMask = value; }
         }
 
-        /// Contain info about collied object.
-        protected RaycastHit hit;
         public RaycastHit Hit {
             get { return hit; }
             set { hit = value; }
         }
 
-        /// Layer on which collisions should be detected
-        [SerializeField]
-        private LayerMask includeLayerMask;
-
-        public LayerMask IncludeLayerMask {
-            get { return includeLayerMask; } 
-            set { includeLayerMask = value; }
-        }
-
-        /// Object that has been hit
-        protected GameObject hitObject;
-
         public GameObject HitObject {
             get { return hitObject; }
             set { hitObject = value; }
         }
-
-        /// Draw raycast.
-        [SerializeField]
-        private bool drawRay;
 
         // TODO Add doc
         public bool DrawRay {
@@ -57,28 +60,24 @@ namespace OneDayGame {
             set { drawRay = value; }
         }
 
-        /// Pause game on collision.
-        [SerializeField]
-        private bool pauseGame;
-
         // TODO
         public bool PauseGame {
             get { return pauseGame; }
             set { pauseGame = value; }
         }
 
-        /// Disable component after collision.
-        [SerializeField]
-        private bool disableAfterCollision;
+        public bool Collision {
+            get { return collision; }
+        }
+
+        public float RaycastLength {
+            get { return raycastLength; }
+            set { raycastLength = value; }
+        }
 
         #endregion
 
-        #region INSPECTOR FIELDS
-        #endregion
-
-        #region PROPERTIES
-        #endregion
-
+        #region METHODS
         private void FixedUpdate() {
             // Don't execute in edit mode
             if (!Application.isPlaying) {
@@ -125,5 +124,6 @@ namespace OneDayGame {
             }
             return false;
         }
+        #endregion
     }
 }

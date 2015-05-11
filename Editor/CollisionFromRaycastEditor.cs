@@ -19,8 +19,6 @@ public class CollisionFromRaycastEditor : Editor {
 	}
 
 	public override void OnInspectorGUI() {
-		base.OnInspectorGUI();
-		//CollisionFromRaycast script = (CollisionFromRaycast)target;
 		serializedObject.Update();
 		
 		EditorGUILayout.PropertyField(raycastLength);
