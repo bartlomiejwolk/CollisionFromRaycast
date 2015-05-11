@@ -67,6 +67,7 @@ namespace OneDayGame {
 
         public bool Collision {
             get { return collision; }
+            set { collision = value; }
         }
 
         public float RaycastLength {
@@ -84,40 +85,47 @@ namespace OneDayGame {
 
         #region METHODS
         private void FixedUpdate() {
-            // Don't execute in edit mode
-            if (!Application.isPlaying) {
-                return;
-            }
-            
-            // TODO Rename to CheckForCollision()
-            if (CollisionDetected()) {
-                collision = true;
-                /// Disable component.
-                if (DisableAfterCollision) {
-                    this.enabled = false;
-                }
-            }
-            else {
-                collision = false;
-            }
-            
-            // Break on collision if the option is set.
-            if (Collision && PauseGame) {
-                Debug.Log("CollisionFromRaycast: stop on collision");
-                Debug.Break();
-            }
+            ThrowRaycast();
+            HandlePauseGameOption();
+            HandleDrawRayOption();
+            HandleDisableAfterCollisionOption();
+        }
 
-            if (drawRay) {
-                Debug.DrawRay(transform.position,
-                        transform.forward * raycastLength, Color.green);
-            }
+        // todo execute as callback in the ThrowRaycast()
+        private void HandleDisableAfterCollisionOption() {
+            if (!Application.isPlaying) return;
+            if (!DisableAfterCollision) return;
+
+            enabled = false;
+        }
+
+        private void HandleDrawRayOption() {
+            if (!Application.isPlaying) return;
+            if (!DrawRay) return;
+
+            Debug.DrawRay(
+                transform.position,
+                transform.forward * raycastLength,
+                Color.green);
+        }
+
+        private void HandlePauseGameOption() {
+            if (!Application.isPlaying) return;
+
+            if (!Collision) return;
+            if (!PauseGame) return;
+
+            Debug.Log("CollisionFromRaycast: stop on collision");
+            Debug.Break();
         }
 
         /// <summary>
         /// Check for collision with another object.
         /// </summary>
         /// <returns></returns>
-        private bool CollisionDetected() {
+        private bool ThrowRaycast() {
+            Collision = false;
+
             var coll = Physics.Raycast(
                 transform.position,
                 transform.forward,
@@ -128,6 +136,7 @@ namespace OneDayGame {
             if (!coll) return false;
 
             HitObject = hit.collider.gameObject;
+            Collision = true;
 
             return true;
         }
