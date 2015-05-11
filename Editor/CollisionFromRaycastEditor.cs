@@ -4,15 +4,14 @@ using UnityEditor;
 using OneDayGame;
 
 [CustomEditor(typeof(CollisionFromRaycast))]
-public class CollisionFromRaycastEditor : GameComponentEditor {
+public class CollisionFromRaycastEditor : Editor {
 
 	private SerializedProperty _raycastLength;
 	private SerializedProperty _drawRay; 
 	private SerializedProperty _pauseGame;
 	private SerializedProperty _disableAfterCollision;
 
-	public override void OnEnable() {
-		base.OnEnable();
+	public void OnEnable() {
 		_raycastLength = serializedObject.FindProperty("_raycastLength");
 		_drawRay = serializedObject.FindProperty("_drawRay");
 		_pauseGame = serializedObject.FindProperty("_pauseGame");

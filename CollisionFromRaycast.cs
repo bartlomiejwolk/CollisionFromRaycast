@@ -4,7 +4,7 @@ using System.Collections;
 namespace OneDayGame {
 
 	[ExecuteInEditMode]
-	public class CollisionFromRaycast : GameComponent, ICollision {
+	public class CollisionFromRaycast : MonoBehaviour {
 
 		/// If collision happened.
 		[SerializeField]
@@ -71,15 +71,7 @@ namespace OneDayGame {
 		[SerializeField]
 		private bool _disableAfterCollision;
 
-		public override void Start () {
-			base.Start();
-		}
-		
-		public override void Update () {
-			base.Update();
-		}
-
-		public override void FixedUpdate() {
+		private void FixedUpdate() {
 			// Don't execute in edit mode
 			if (!Application.isPlaying) {
 				return;
