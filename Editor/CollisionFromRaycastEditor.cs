@@ -6,16 +6,16 @@ using OneDayGame;
 [CustomEditor(typeof(CollisionFromRaycast))]
 public class CollisionFromRaycastEditor : Editor {
 
-	private SerializedProperty _raycastLength;
-	private SerializedProperty _drawRay; 
-	private SerializedProperty _pauseGame;
-	private SerializedProperty _disableAfterCollision;
+	private SerializedProperty raycastLength;
+	private SerializedProperty drawRay; 
+	private SerializedProperty pauseGame;
+	private SerializedProperty disableAfterCollision;
 
 	public void OnEnable() {
-		_raycastLength = serializedObject.FindProperty("_raycastLength");
-		_drawRay = serializedObject.FindProperty("_drawRay");
-		_pauseGame = serializedObject.FindProperty("_pauseGame");
-		_disableAfterCollision = serializedObject.FindProperty("_disableAfterCollision");
+		raycastLength = serializedObject.FindProperty("raycastLength");
+		drawRay = serializedObject.FindProperty("drawRay");
+		pauseGame = serializedObject.FindProperty("pauseGame");
+		disableAfterCollision = serializedObject.FindProperty("disableAfterCollision");
 	}
 
 	public override void OnInspectorGUI() {
@@ -23,10 +23,10 @@ public class CollisionFromRaycastEditor : Editor {
 		//CollisionFromRaycast script = (CollisionFromRaycast)target;
 		serializedObject.Update();
 		
-		EditorGUILayout.PropertyField(_raycastLength);
-		EditorGUILayout.PropertyField(_drawRay);
-		EditorGUILayout.PropertyField(_pauseGame);
-		EditorGUILayout.PropertyField(_disableAfterCollision);
+		EditorGUILayout.PropertyField(raycastLength);
+		EditorGUILayout.PropertyField(drawRay);
+		EditorGUILayout.PropertyField(pauseGame);
+		EditorGUILayout.PropertyField(disableAfterCollision);
 
 		serializedObject.ApplyModifiedProperties();
 	}

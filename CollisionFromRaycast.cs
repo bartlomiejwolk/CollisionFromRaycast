@@ -8,68 +8,67 @@ namespace OneDayGame {
 
 		/// If collision happened.
 		[SerializeField]
-		private bool _collision = false;
+		private bool collision;
 
 		public bool Collision {
-			get { return _collision; }
-			private set {}
+			get { return collision; }
 		}
 
 		/// Raycast length.
 		[SerializeField]
-		private float _raycastLength = 1;
+		private float raycastLength = 1;
 		public float RaycastLength {
-			get { return _raycastLength; }
-			set { _raycastLength = value; }
+			get { return raycastLength; }
+			set { raycastLength = value; }
 		}
 
 		/// Contain info about collied object.
-		protected RaycastHit _hit;
+		protected RaycastHit hit;
 		public RaycastHit Hit {
-			get { return _hit; }
-			set { _hit = value; }
+			get { return hit; }
+			set { hit = value; }
 		}
 
 		/// Layer on which collisions should be detected
 		[SerializeField]
-		private LayerMask _includeLayerMask;
+		private LayerMask includeLayerMask;
 
 		public LayerMask IncludeLayerMask {
-			get { return _includeLayerMask; } 
-			set { _includeLayerMask = value; }
+			get { return includeLayerMask; } 
+			set { includeLayerMask = value; }
 		}
 
 		/// Object that has been hit
-		protected GameObject _hitObject;
+		protected GameObject hitObject;
 
 		public GameObject HitObject {
-			get { return _hitObject; }
-			set { _hitObject = value; }
+			get { return hitObject; }
+			set { hitObject = value; }
 		}
 
 		/// Draw raycast.
 		[SerializeField]
-		private bool _drawRay;
+		private bool drawRay;
 
 		// TODO Add doc
 		public bool DrawRay {
-			get { return _drawRay; }
-			set { _drawRay = value; }
+			get { return drawRay; }
+			set { drawRay = value; }
 		}
 
 		/// Pause game on collision.
 		[SerializeField]
-		private bool _pauseGame;
+		private bool pauseGame;
 
 		// TODO
 		public bool PauseGame {
-			get { return _pauseGame; }
-			set { _pauseGame = value; }
+			get { return pauseGame; }
+			set { pauseGame = value; }
 		}
 
 		/// Disable component after collision.
 		[SerializeField]
-		private bool _disableAfterCollision;
+		private bool disableAfterCollision;
 
 		private void FixedUpdate() {
 			// Don't execute in edit mode
@@ -79,25 +78,25 @@ namespace OneDayGame {
 			
 			// TODO Rename to CheckForCollision()
 			if (CollisionDetected()) {
-				_collision = true;
+				collision = true;
 				/// Disable component.
-				if (_disableAfterCollision) {
+				if (disableAfterCollision) {
 					this.enabled = false;
 				}
 			}
 			else {
-				_collision = false;
+				collision = false;
 			}
 			
 			// Break on collision if the option is set.
-			if (_collision && _pauseGame) {
+			if (collision && pauseGame) {
 				Debug.Log("CollisionFromRaycast: stop on collision");
 				Debug.Break();
 			}
 
-			if (_drawRay) {
+			if (drawRay) {
 				Debug.DrawRay(transform.position,
-						transform.forward * _raycastLength, Color.green);
+						transform.forward * raycastLength, Color.green);
 			}
 		}
 
@@ -108,11 +107,11 @@ namespace OneDayGame {
 			collision = Physics.Raycast(
 					transform.position,
 					transform.forward,
-					out _hit,
-					_raycastLength,
-					_includeLayerMask);
+					out hit,
+					raycastLength,
+					includeLayerMask);
 			if(collision) {
-				_hitObject = _hit.collider.gameObject;
+				hitObject = hit.collider.gameObject;
 				return true;
 			}
 			return false;
