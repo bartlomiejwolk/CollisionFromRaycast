@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 namespace OneDayGame {
+
+    // todo move to file
+    [System.Serializable]
+    public class CollisionOccured : UnityEvent<RaycastHit> { }
 
     [ExecuteInEditMode]
     public class CollisionFromRaycast : MonoBehaviour {
@@ -37,6 +42,9 @@ namespace OneDayGame {
         /// Raycast length.
         [SerializeField]
         private float raycastLength = 1;
+
+        [SerializeField]
+        private CollisionOccured collisionEvent;
 
         #endregion
 
@@ -79,6 +87,11 @@ namespace OneDayGame {
         public bool DisableAfterCollision {
             get { return disableAfterCollision; }
             set { disableAfterCollision = value; }
+        }
+
+        public CollisionOccured CollisionEvent {
+            get { return collisionEvent; }
+            set { collisionEvent = value; }
         }
 
         #endregion
@@ -137,6 +150,7 @@ namespace OneDayGame {
 
             HitObject = hit.collider.gameObject;
             Collision = true;
+            CollisionEvent.Invoke(Hit);
 
             return true;
         }
