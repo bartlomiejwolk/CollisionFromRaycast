@@ -6,17 +6,19 @@ namespace OneDayGame {
     [ExecuteInEditMode]
     public class CollisionFromRaycast : MonoBehaviour {
 
+        // todo move docs to properties
         #region FIELDS
         /// If collision happened.
         [SerializeField]
         private bool collision;
+
         /// Contain info about collied object.
-        protected RaycastHit hit;
+        private RaycastHit hit;
+
         /// Layer on which collisions should be detected
         [SerializeField]
         private LayerMask includeLayerMask;
-        /// Object that has been hit
-        protected GameObject hitObject;
+
         #endregion
 
         #region INSPECTOR FIELDS
@@ -49,10 +51,7 @@ namespace OneDayGame {
             set { hit = value; }
         }
 
-        public GameObject HitObject {
-            get { return hitObject; }
-            set { hitObject = value; }
-        }
+        public GameObject HitObject { get; set; }
 
         // TODO Add doc
         public bool DrawRay {
@@ -75,6 +74,12 @@ namespace OneDayGame {
             set { raycastLength = value; }
         }
 
+        /// Disable component after collision.
+        public bool DisableAfterCollision {
+            get { return disableAfterCollision; }
+            set { disableAfterCollision = value; }
+        }
+
         #endregion
 
         #region METHODS
@@ -88,7 +93,7 @@ namespace OneDayGame {
             if (CollisionDetected()) {
                 collision = true;
                 /// Disable component.
-                if (disableAfterCollision) {
+                if (DisableAfterCollision) {
                     this.enabled = false;
                 }
             }
@@ -97,7 +102,7 @@ namespace OneDayGame {
             }
             
             // Break on collision if the option is set.
-            if (collision && pauseGame) {
+            if (Collision && PauseGame) {
                 Debug.Log("CollisionFromRaycast: stop on collision");
                 Debug.Break();
             }
@@ -122,7 +127,7 @@ namespace OneDayGame {
 
             if (!coll) return false;
 
-            hitObject = hit.collider.gameObject;
+            HitObject = hit.collider.gameObject;
 
             return true;
         }
