@@ -108,21 +108,23 @@ namespace OneDayGame {
             }
         }
 
+        /// <summary>
         /// Check for collision with another object.
+        /// </summary>
+        /// <returns></returns>
         private bool CollisionDetected() {
-            bool collision;
+            var coll = Physics.Raycast(
+                transform.position,
+                transform.forward,
+                out hit,
+                raycastLength,
+                includeLayerMask);
 
-            collision = Physics.Raycast(
-                    transform.position,
-                    transform.forward,
-                    out hit,
-                    raycastLength,
-                    includeLayerMask);
-            if(collision) {
-                hitObject = hit.collider.gameObject;
-                return true;
-            }
-            return false;
+            if (!coll) return false;
+
+            hitObject = hit.collider.gameObject;
+
+            return true;
         }
         #endregion
     }
