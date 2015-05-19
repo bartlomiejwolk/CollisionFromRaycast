@@ -46,23 +46,40 @@ namespace CollisionFromRaycastEx {
                 collisionEvent,
                 new GUIContent(
                     "Events",
-                    "Unity Events"));
+                    "Actions to execute on collison."));
         }
 
         private void DrawDisableAfterCollisionToggle() {
-            EditorGUILayout.PropertyField(disableAfterCollision);
+            EditorGUILayout.PropertyField(
+                disableAfterCollision,
+                new GUIContent(
+                    "Disable After Collision",
+                    "If checked, this component will disable itself " +
+                    "after first collison."));
         }
 
         private void DrawPauseGameToggle() {
-            EditorGUILayout.PropertyField(pauseGame);
+            EditorGUILayout.PropertyField(
+                pauseGame,
+                new GUIContent(
+                    "Pause Game",
+                    "If checked, on collision the game will be paused."));
         }
 
         private void DrawDrawRayToggle() {
-            EditorGUILayout.PropertyField(drawRay);
+            EditorGUILayout.PropertyField(
+                drawRay,
+                new GUIContent(
+                    "Draw Ray",
+                    "Draw raycast ray gizmo."));
         }
 
         private void DrawRaycastLengthField() {
-            EditorGUILayout.PropertyField(raycastLength);
+            EditorGUILayout.PropertyField(
+                raycastLength,
+                new GUIContent(
+                    "Raycast Length",
+                    "Length of the raycast."));
         }
 
         #endregion
