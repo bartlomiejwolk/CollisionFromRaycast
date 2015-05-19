@@ -1,28 +1,28 @@
 ﻿// Copyright (c) 2015 Bartłomiej Wołk (bartlomiejwolk@gmail.com)
 // 
-// This file is part of the CollisionFromRaycast extension for Unity.
-// Licensed under the MIT license. See LICENSE file in the project root folder.
+// This file is part of the CollisionFromRaycast extension for Unity. Licensed
+// under the MIT license. See LICENSE file in the project root folder.
 
-using UnityEngine;
-using System.Collections;
 using UnityEditor;
-using OneDayGame;
+using UnityEngine;
 
 namespace CollisionFromRaycastEx {
 
     [CustomEditor(typeof (CollisionFromRaycast))]
     public class CollisionFromRaycastEditor : Editor {
-
         #region SERIALIZED PROPERTIES
-        private SerializedProperty raycastLength;
-        private SerializedProperty drawRay;
-        private SerializedProperty pauseGame;
-        private SerializedProperty disableAfterCollision;
+
         private SerializedProperty collisionEvent;
         private SerializedProperty description;
-        #endregion
+        private SerializedProperty disableAfterCollision;
+        private SerializedProperty drawRay;
+        private SerializedProperty pauseGame;
+        private SerializedProperty raycastLength;
+
+        #endregion SERIALIZED PROPERTIES
 
         #region UNITY MESSAGES
+
         public void OnEnable() {
             raycastLength = serializedObject.FindProperty("raycastLength");
             drawRay = serializedObject.FindProperty("drawRay");
@@ -40,7 +40,7 @@ namespace CollisionFromRaycastEx {
             DrawDescriptionTextArea();
 
             EditorGUILayout.Space();
-            
+
             DrawRaycastLengthField();
             DrawDrawRayToggle();
             DrawPauseGameToggle();
@@ -53,16 +53,13 @@ namespace CollisionFromRaycastEx {
             serializedObject.ApplyModifiedProperties();
         }
 
-        #endregion
+        #endregion UNITY MESSAGES
 
         #region INSPECTOR CONTROLS
 
-        private void DrawEventsList() {
-            EditorGUILayout.PropertyField(
-                collisionEvent,
-                new GUIContent(
-                    "Events",
-                    "Actions to execute on collison."));
+        private void DrawDescriptionTextArea() {
+            description.stringValue = EditorGUILayout.TextArea(
+                description.stringValue);
         }
 
         private void DrawDisableAfterCollisionToggle() {
@@ -74,20 +71,28 @@ namespace CollisionFromRaycastEx {
                     "after first collison."));
         }
 
-        private void DrawPauseGameToggle() {
-            EditorGUILayout.PropertyField(
-                pauseGame,
-                new GUIContent(
-                    "Pause Game",
-                    "If checked, on collision the game will be paused."));
-        }
-
         private void DrawDrawRayToggle() {
             EditorGUILayout.PropertyField(
                 drawRay,
                 new GUIContent(
                     "Draw Ray",
                     "Draw raycast ray gizmo."));
+        }
+
+        private void DrawEventsList() {
+            EditorGUILayout.PropertyField(
+                collisionEvent,
+                new GUIContent(
+                    "Events",
+                    "Actions to execute on collison."));
+        }
+
+        private void DrawPauseGameToggle() {
+            EditorGUILayout.PropertyField(
+                pauseGame,
+                new GUIContent(
+                    "Pause Game",
+                    "If checked, on collision the game will be paused."));
         }
 
         private void DrawRaycastLengthField() {
@@ -106,19 +111,15 @@ namespace CollisionFromRaycastEx {
                     CollisionFromRaycast.Extension));
         }
 
-        private void DrawDescriptionTextArea() {
-            description.stringValue = EditorGUILayout.TextArea(
-                description.stringValue);
-        }
- 
-        #endregion
+        #endregion INSPECTOR CONTROLS
+
         #region METHODS
 
         [MenuItem("Component/CollisionFromRaycast")]
         private static void AddEntryToComponentMenu() {
             if (Selection.activeGameObject != null) {
                 Selection.activeGameObject.AddComponent(
-                    typeof(CollisionFromRaycast));
+                    typeof (CollisionFromRaycast));
             }
         }
 
