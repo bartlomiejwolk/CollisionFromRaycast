@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Events;
 
-namespace OneDayGame {
+namespace CollisionFromRaycastEx {
 
     // todo move to file
     [System.Serializable]
