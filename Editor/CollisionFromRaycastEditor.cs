@@ -1,34 +1,129 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿// Copyright (c) 2015 Bartłomiej Wołk (bartlomiejwolk@gmail.com)
+// 
+// This file is part of the CollisionFromRaycast extension for Unity. Licensed
+// under the MIT license. See LICENSE file in the project root folder.
+
 using UnityEditor;
-using OneDayGame;
+using UnityEngine;
 
-[CustomEditor(typeof(CollisionFromRaycast))]
-public class CollisionFromRaycastEditor : GameComponentEditor {
+namespace CollisionFromRaycastEx {
 
-	private SerializedProperty _raycastLength;
-	private SerializedProperty _drawRay; 
-	private SerializedProperty _pauseGame;
-	private SerializedProperty _disableAfterCollision;
+    [CustomEditor(typeof (CollisionFromRaycast))]
+    public class CollisionFromRaycastEditor : Editor {
+        #region SERIALIZED PROPERTIES
 
-	public override void OnEnable() {
-		base.OnEnable();
-		_raycastLength = serializedObject.FindProperty("_raycastLength");
-		_drawRay = serializedObject.FindProperty("_drawRay");
-		_pauseGame = serializedObject.FindProperty("_pauseGame");
-		_disableAfterCollision = serializedObject.FindProperty("_disableAfterCollision");
-	}
+        private SerializedProperty collisionEvent;
+        private SerializedProperty description;
+        private SerializedProperty disableAfterCollision;
+        private SerializedProperty drawRay;
+        private SerializedProperty pauseGame;
+        private SerializedProperty raycastLength;
 
-	public override void OnInspectorGUI() {
-		base.OnInspectorGUI();
-		//CollisionFromRaycast script = (CollisionFromRaycast)target;
-		serializedObject.Update();
-		
-		EditorGUILayout.PropertyField(_raycastLength);
-		EditorGUILayout.PropertyField(_drawRay);
-		EditorGUILayout.PropertyField(_pauseGame);
-		EditorGUILayout.PropertyField(_disableAfterCollision);
+        #endregion SERIALIZED PROPERTIES
 
-		serializedObject.ApplyModifiedProperties();
-	}
+        #region UNITY MESSAGES
+
+        public void OnEnable() {
+            raycastLength = serializedObject.FindProperty("raycastLength");
+            drawRay = serializedObject.FindProperty("drawRay");
+            pauseGame = serializedObject.FindProperty("pauseGame");
+            disableAfterCollision =
+                serializedObject.FindProperty("disableAfterCollision");
+            collisionEvent = serializedObject.FindProperty("collisionEvent");
+            description = serializedObject.FindProperty("description");
+        }
+
+        public override void OnInspectorGUI() {
+            serializedObject.Update();
+
+            DrawVersionLabel();
+            DrawDescriptionTextArea();
+
+            EditorGUILayout.Space();
+
+            DrawRaycastLengthField();
+            DrawDrawRayToggle();
+            DrawPauseGameToggle();
+            DrawDisableAfterCollisionToggle();
+
+            EditorGUILayout.Space();
+
+            DrawEventsList();
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        #endregion UNITY MESSAGES
+
+        #region INSPECTOR CONTROLS
+
+        private void DrawDescriptionTextArea() {
+            description.stringValue = EditorGUILayout.TextArea(
+                description.stringValue);
+        }
+
+        private void DrawDisableAfterCollisionToggle() {
+            EditorGUILayout.PropertyField(
+                disableAfterCollision,
+                new GUIContent(
+                    "Disable After Collision",
+                    "If checked, this component will disable itself " +
+                    "after first collison."));
+        }
+
+        private void DrawDrawRayToggle() {
+            EditorGUILayout.PropertyField(
+                drawRay,
+                new GUIContent(
+                    "Draw Ray",
+                    "Draw raycast ray gizmo."));
+        }
+
+        private void DrawEventsList() {
+            EditorGUILayout.PropertyField(
+                collisionEvent,
+                new GUIContent(
+                    "Events",
+                    "Actions to execute on collison."));
+        }
+
+        private void DrawPauseGameToggle() {
+            EditorGUILayout.PropertyField(
+                pauseGame,
+                new GUIContent(
+                    "Pause Game",
+                    "If checked, on collision the game will be paused."));
+        }
+
+        private void DrawRaycastLengthField() {
+            EditorGUILayout.PropertyField(
+                raycastLength,
+                new GUIContent(
+                    "Raycast Length",
+                    "Length of the raycast."));
+        }
+
+        private void DrawVersionLabel() {
+            EditorGUILayout.LabelField(
+                string.Format(
+                    "{0} ({1})",
+                    CollisionFromRaycast.Version,
+                    CollisionFromRaycast.Extension));
+        }
+
+        #endregion INSPECTOR CONTROLS
+
+        #region METHODS
+
+        [MenuItem("Component/CollisionFromRaycast")]
+        private static void AddEntryToComponentMenu() {
+            if (Selection.activeGameObject != null) {
+                Selection.activeGameObject.AddComponent(
+                    typeof (CollisionFromRaycast));
+            }
+        }
+
+        #endregion METHODS
+    }
+
 }
