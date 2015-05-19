@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Events;
 
 namespace CollisionFromRaycastEx {
-
-    // todo move to file
-    [System.Serializable]
-    public class CollisionOccured : UnityEvent<RaycastHit> { }
 
     [ExecuteInEditMode]
     public class CollisionFromRaycast : MonoBehaviour {
