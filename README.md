@@ -24,7 +24,8 @@ Nothing here.
 1. Clone repository into the *Assets* folder.
 2. Select game object in the hierarchy window and from the *Component* menu
    select *CollisionFromRaycast* to add component to the selected game object.
-3. Set options and add callback action. If your callback method can take a *RaycastHit* as an argument.
+3. Set options and add callback action. Your callback method can take a *RaycastHit* as an argument.
+   Hit play and when a collision is detected, the callback action will be executed.
 
 ## Help
 
