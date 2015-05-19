@@ -91,7 +91,7 @@ namespace CollisionFromRaycastEx {
 
         #endregion
 
-        #region METHODS
+        #region UNITY MESSAGES
         private void FixedUpdate() {
             ThrowRaycast();
             HandlePauseGameOption();
@@ -99,6 +99,9 @@ namespace CollisionFromRaycastEx {
             HandleDisableAfterCollisionOption();
         }
 
+        #endregion
+
+        #region METHODS
         // todo execute as callback in the ThrowRaycast()
         private void HandleDisableAfterCollisionOption() {
             if (!Application.isPlaying) return;
