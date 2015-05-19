@@ -19,6 +19,7 @@ namespace CollisionFromRaycastEx {
         private SerializedProperty pauseGame;
         private SerializedProperty disableAfterCollision;
         private SerializedProperty collisionEvent;
+        private SerializedProperty description;
         #endregion
 
         #region UNITY MESSAGES
@@ -29,11 +30,17 @@ namespace CollisionFromRaycastEx {
             disableAfterCollision =
                 serializedObject.FindProperty("disableAfterCollision");
             collisionEvent = serializedObject.FindProperty("collisionEvent");
+            description = serializedObject.FindProperty("description");
         }
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
 
+            DrawVersionLabel();
+            DrawDescriptionTextArea();
+
+            EditorGUILayout.Space();
+            
             DrawRaycastLengthField();
             DrawDrawRayToggle();
             DrawPauseGameToggle();
@@ -45,6 +52,10 @@ namespace CollisionFromRaycastEx {
 
             serializedObject.ApplyModifiedProperties();
         }
+
+        #endregion
+
+        #region INSPECTOR CONTROLS
 
         private void DrawEventsList() {
             EditorGUILayout.PropertyField(
@@ -87,6 +98,19 @@ namespace CollisionFromRaycastEx {
                     "Length of the raycast."));
         }
 
+        private void DrawVersionLabel() {
+            EditorGUILayout.LabelField(
+                string.Format(
+                    "{0} ({1})",
+                    CollisionFromRaycast.Version,
+                    CollisionFromRaycast.Extension));
+        }
+
+        private void DrawDescriptionTextArea() {
+            description.stringValue = EditorGUILayout.TextArea(
+                description.stringValue);
+        }
+ 
         #endregion
 
     }

@@ -11,6 +11,12 @@ namespace CollisionFromRaycastEx {
     [ExecuteInEditMode]
     public class CollisionFromRaycast : MonoBehaviour {
 
+        #region CONSTANTS
+
+        public const string Version = "v0.1.0";
+        public const string Extension = "CollisionFromRaycast";
+
+        #endregion
         // todo move docs to properties
         #region FIELDS
         /// If collision happened.
@@ -46,6 +52,8 @@ namespace CollisionFromRaycastEx {
         [SerializeField]
         private CollisionOccured collisionEvent;
 
+        [SerializeField]
+        private string description = "Description";
         #endregion
 
         #region PROPERTIES
@@ -92,6 +100,11 @@ namespace CollisionFromRaycastEx {
         public CollisionOccured CollisionEvent {
             get { return collisionEvent; }
             set { collisionEvent = value; }
+        }
+
+        public string Description {
+            get { return description; }
+            set { description = value; }
         }
 
         #endregion
