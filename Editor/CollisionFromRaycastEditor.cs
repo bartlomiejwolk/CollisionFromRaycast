@@ -112,7 +112,17 @@ namespace CollisionFromRaycastEx {
         }
  
         #endregion
+        #region METHODS
 
+        [MenuItem("Component/CollisionFromRaycast")]
+        private static void AddEntryToComponentMenu() {
+            if (Selection.activeGameObject != null) {
+                Selection.activeGameObject.AddComponent(
+                    typeof(CollisionFromRaycast));
+            }
+        }
+
+        #endregion METHODS
     }
 
 }
