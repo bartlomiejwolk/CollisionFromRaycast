@@ -20,6 +20,13 @@ namespace CollisionFromRaycastEx {
 
         #region FIELDS
 
+        /// <summary>
+        /// Allows identify component in the scene file when reading it with
+        /// text editor.
+        /// </summary>
+        [SerializeField]
+        private string componentName = "CollisionFromRaycast";
+
         /// If collision happened.
         [SerializeField]
         private bool collision;
