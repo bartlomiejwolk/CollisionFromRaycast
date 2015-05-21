@@ -18,6 +18,7 @@ namespace CollisionFromRaycastEx {
         private SerializedProperty drawRay;
         private SerializedProperty pauseGame;
         private SerializedProperty raycastLength;
+        private SerializedProperty layerMask;
 
         #endregion SERIALIZED PROPERTIES
 
@@ -31,6 +32,7 @@ namespace CollisionFromRaycastEx {
                 serializedObject.FindProperty("disableAfterCollision");
             collisionEvent = serializedObject.FindProperty("collisionEvent");
             description = serializedObject.FindProperty("description");
+            layerMask = serializedObject.FindProperty("layerMask");
         }
 
         public override void OnInspectorGUI() {
@@ -42,6 +44,7 @@ namespace CollisionFromRaycastEx {
             EditorGUILayout.Space();
 
             DrawRaycastLengthField();
+            DrawIncludeLayerMaskDropdown();
             DrawDrawRayToggle();
             DrawPauseGameToggle();
             DrawDisableAfterCollisionToggle();
@@ -51,6 +54,14 @@ namespace CollisionFromRaycastEx {
             DrawEventsList();
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private void DrawIncludeLayerMaskDropdown() {
+            EditorGUILayout.PropertyField(
+                layerMask,
+                new GUIContent(
+                    "Layer Mask",
+                    "Specified layers will be detected by the raycast."));
         }
 
         #endregion UNITY MESSAGES

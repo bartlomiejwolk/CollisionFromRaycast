@@ -36,7 +36,7 @@ namespace CollisionFromRaycastEx {
 
         /// Layer on which collisions should be detected
         [SerializeField]
-        private LayerMask includeLayerMask;
+        private LayerMask layerMask;
 
         #endregion FIELDS
 
@@ -102,9 +102,9 @@ namespace CollisionFromRaycastEx {
 
         public GameObject HitObject { get; set; }
 
-        public LayerMask IncludeLayerMask {
-            get { return includeLayerMask; }
-            set { includeLayerMask = value; }
+        public LayerMask LayerMask {
+            get { return layerMask; }
+            set { layerMask = value; }
         }
 
         // TODO
@@ -173,7 +173,7 @@ namespace CollisionFromRaycastEx {
                 transform.forward,
                 out hit,
                 raycastLength,
-                includeLayerMask);
+                LayerMask);
 
             if (!coll) return false;
 
